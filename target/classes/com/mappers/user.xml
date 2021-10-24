@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.UserDao">
+        <!--返回个人信息-->
+         <select id="login" parameterType="com.model.User" resultType="com.model.User">
+                select * from users where userName=#{userName}
+         </select>
+
+        <!--返回余额-->
+        <select id="personalInfo" parameterType="string" resultType="com.model.Money">
+                select * from money where userName=#{userName}
+        </select>
+
+       <!--用户注册-->
+       <insert id="register" parameterType="com.model.User">
+            insert into users(userName,passwordd,namee,sex,phone,email,idCard,userType,peopleCode)
+            values(#{userName},#{passwordd},#{namee},#{sex},#{phone},#{email},#{idCard},#{userType},#{peopleCode})
+       </insert>
+
+      <!--用户注册后把用户名和余额写入money表-->
+      <insert id="userNameAndBalance" parameterType="HashMap">
+              insert into money(userName,balance) values(#{userName},#{balance})
+      </insert>
+
+     <!--充值-->
+     <update id="userRecharge" parameterType="HashMap">
+             update money set balance=#{sumMoney} where userName=#{userName}
+     </update>
+
+     <!--修改手机号和邮箱-->
+     <update id="modifyPhoneAndEmail" parameterType="HashMap">
+            update users set phone=#{newPhone},email=#{newEmail} where username=#{userName}
+     </update>
+
+     <!--取消手机号和邮箱的修改-->
+     <select id="cancelModifyPhoneAndEmail" parameterType="string" resultType="HashMap">
+            select phone as "cancelPhone",email as "cancelEmail" from users where username=#{userName}
+     </select>
+
+     <!--修改密码-->
+    <update id="modifyPassword" parameterType="HashMap">
+             update users set passwordd=#{newPassword} where username=#{userName}
+    </update>
+
+    <!--利用手机号找回的用户名-->
+    <select id="findUserNameByPhone" parameterType="string" resultType="string">
+            select username from users where phone=#{phone}
+    </select>
+
+    <!--利用手机号找回的密码-->
+    <select id="findUserPasswordByPhone" parameterType="string" resultType="string">
+          select passwordd from users where phone=#{phone}
+    </select>
+
+    <!--利用邮件找回的手机号-->
+    <select id="findPhoneByEmail" parameterType="string" resultType="string">
+            select phone from users where email=#{email}
+    </select>
+</mapper>    

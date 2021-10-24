@@ -1,0 +1,81 @@
+
+.button{
+	border-radius: 10px;
+	border: 1xp solid #43D1F9;
+	width: 60px;
+	color: black;
+	padding: 4px;
+	margin-left: 10px;
+	margin-right: 180px;
+	cursor: pointer;
+	text-shadow: 0 1px 1px rgba(0,0,0,.2);
+	 background: linear-gradient(to bottom,white,#D4E4F4);
+}
+.c_tr{
+	border-bottom: 1px solid #D4E4F4;
+}
+.select{
+	border-radius: 8px;
+    box-shadow: inset 0 2px 5px #eee;
+    border: 1px solid #D4D4D4;
+    color: #333333;
+    font: inherit;
+    height: 25px;
+	width: 110px;
+	height: 25px;
+	padding: 5px;
+    margin: 8px 8px 8px 25px;
+}
+.del-success {
+    display: inline;
+    padding: .3em .6em;
+    font-size: 75%;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    vertical-align: baseline;
+    border-radius: 3px;
+    background-color: #f55f5a;
+    
+}
+
+.title {
+    float: left;
+    width: 120px;
+    text-align: right;
+    margin: 16px 10px 0 0;
+    font-size: 14px;
+}
+textarea {
+    border-radius: 5px;
+    box-shadow: inset 0 2px 5px #eee;
+    padding: 5px;
+    border: 1px solid #D4D4D4;
+    color: #333333;
+    margin: 8px 8px 8px 25px;
+    resize: none;
+    width: 230px;
+    height: 50px;
+}
+.input{
+	border-radius: 8px;
+    box-shadow: inset 0 2px 5px #eee;
+    border: 1px solid #D4D4D4;
+    color: #333333;
+    font: inherit;
+    height: 25px;
+    width: 230px;
+    padding: 5px;
+    margin: 8px 8px 8px 25px;
+}
+.input1{
+	border-radius: 8px;
+    box-shadow: inset 0 2px 5px #eee;
+    border: 1px solid #D4D4D4;
+    color: #333333;
+    font: inherit;
+    height: 36px;
+    width: 230px;
+    padding: 5px;
+    margin: 8px 8px 8px 25px;
+}

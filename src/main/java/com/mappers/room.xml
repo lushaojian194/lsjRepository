@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.RoomDao">
+    <!--加载推荐的房间-->
+    <select id="findRoom" parameterType="HashMap" resultType="com.model.Room">
+        select * from (select * from room where roomstate=#{roomState} order by ${times} desc) as r limit 10
+    </select>
+    <!--房间评价-->
+    <select id="findStar"  resultType="com.model.star">
+        select * from star
+    </select>
+    <!--我的评价-->
+    <select id="findPersonalStar" parameterType="String" resultType="com.model.star">
+        select * from star where namee=#{userName}
+    </select>
+    <!--住房后的评价-->
+    <insert id="myStars" parameterType="com.model.star">
+            insert into star values(#{namee},#{roomType},#{outDay},#{starLight},#{starDark},#{evaluate})
+       </insert>
+    <!--房间类型-->
+    <select id="findRoomtype" parameterType="string" resultType="String">
+        select roomType from room where location=#{location}
+    </select>
+    <!--房间的详情-->
+    <select id="roomInformation" parameterType="string" resultType="com.model.Room">
+            select * from room where location=#{location}
+    </select>
+
+    <!--各个类型的房间-->
+    <select id="findTypeRoom" parameterType="com.model.Room" resultType="com.model.Room">
+         select * from room where roomtype=#{roomType} and roomState=#{roomState}
+     </select>
+
+    <!--入住的房间-->
+    <select id="findCheckIn" parameterType="HashMap" resultType="com.model.CheckIn">
+           select * from checkIn where userName=#{userName} and roomstate=#{roomState}
+    </select>
+
+    <!--预定的房间-->
+    <select id="findBookRoom" parameterType="HashMap" resultType="com.model.BookRoom">
+           select * from book where userName=#{userName} and roomstate=#{roomState}
+    </select>
+
+    <!--房间的密码，用于判断不能重复-->
+    <select id="roomPassword" resultType="String">
+             select roompassword from roomkey
+    </select>
+
+    <!--直接入住-->
+    <insert id="checkIn" parameterType="com.model.CheckIn">
+            insert into checkIn values(#{userName},#{location},#{checkDay},#{day},#{outDay},#{roomState})
+    </insert>
+
+    <!--把房间号和房间密码写进key表-->
+    <insert id="locationAndRoomPassword" parameterType="HashMap">
+            insert into roomkey values(#{location},#{roomPassword})
+    </insert>
+
+    <!--查找该房间是否被预定-->
+    <select id="findRoomIfBooked" parameterType="HashMap" resultType="com.model.BookRoom">
+           select * from book where location=#{location} and roomstate=#{roomState}
+    </select>
+
+    <!--预定房间-->
+    <insert id="bookRoom" parameterType="com.model.BookRoom">
+            insert into book values(#{userName},#{location},#{bookDay},#{outDay},#{day},#{roomState})
+    </insert>
+
+    <!--入住了，把room表的该房间的状态改为1，使之不在前台显示-->
+    <update id="modifyRoomState" parameterType="HashMap">
+             update room set roomstate=#{roomState} where location=#{location}
+    </update>
+
+    <!--查找房价-->
+    <select id="roomPrice" parameterType="string" resultType="int">
+            select price from room where location=#{location}
+    </select>
+
+    <!--入住房退房后，退房的时间要改变-->
+    <update id="checkRoomDateAndRoomState" parameterType="HashMap">
+            update checkIn set outday=#{realDate},roomstate=#{afterRoomstate} where username=#{userName} and roomstate=#{beforeRoomstate}
+    </update>
+
+    <!--预定房退房后，退房的时间要改变-->
+    <update id="bookRoomDateAndRoomState" parameterType="HashMap">
+            update book set outday=#{realDate},roomstate=#{afterRoomstate} where username=#{userName} and roomstate=#{beforeRoomstate}
+    </update>
+
+    <!--查找房间的入住的次数-->
+    <select id="findRoomTimes" parameterType="string" resultType="int">
+            select times from room where location=#{location}
+    </select>
+
+    <!--退房后，房间的入住次数要加1-->
+    <update id="addRoomTimes" parameterType="HashMap">
+             update room set times=#{afterToomTimes} where location=#{location}
+    </update>
+
+    <!--入住房，退房后要把room表的状态从1改为0，使之在前台显示-->
+    <update id="afterModifyRoomState" parameterType="HashMap">
+             update room set roomstate=#{roomState} where location=#{location}
+    </update>
+
+    <!--入住房续住后，入住天数和退房时间要改-->
+    <update id="checkInStayOver" parameterType="HashMap">
+            update checkIn set day=#{day},outday=#{outDay} where username=#{userName} and roomstate=#{roomState}
+    </update>
+
+    <!--预定房续住后，入住天数和退房时间要改-->
+    <update id="bookStayOver" parameterType="HashMap">
+            update book set day=#{day},outday=#{outDay} where username=#{userName} and roomstate=#{roomState}
+    </update>
+
+    <!--住房记录-->
+    <select id="findRoomRecord" parameterType="string" resultType="com.model.RoomRecord">
+             select * from roomrecord where username=#{userName} order by ${outDay} desc
+    </select>
+
+    <!--住房记录总的行数-->
+    <select id="findTotalRecode" parameterType="HashMap" resultType="Integer">
+            select count(1) from roomrecord where username=#{userName}
+    </select>
+
+    <!--用户分页的住房记录-->
+    <!--<select id="RoomRecordWithPage" parameterType="HashMap" resultType="com.model.RoomRecord">
+        select * from(select rownum rn,record.* from(select * from roomrecord where username=#{userName} order by ${outDay} desc)record ) where rn &gt;= #{startIndex} and rn &lt;= #{endIndex}
+    </select>-->
+    <select id="RoomRecordWithPage" parameterType="HashMap" resultType="com.model.RoomRecord">
+        select record.* from(select * from roomrecord where username=#{userName} order by ${outDay} desc) as record limit #{startIndex},#{endIndex}
+    </select>
+
+    <!--房价类型和房价-->
+    <select id="priceAndroomType" parameterType="string" resultType="HashMap">
+        select price as "roomPrice",roomtype as "roomType" from room where location=#{location}
+    </select>
+
+    <!--退房了，把退房信息写进roomRecord表-->
+    <insert id="checkOutRecord" parameterType="com.model.RoomRecord">
+           insert into roomrecord values(#{userName},#{location},#{roomType},#{price},#{checkDay},#{day},#{outDay},#{sign},#{totalMoney})
+    </insert>
+</mapper>
