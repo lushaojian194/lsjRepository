@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebServlet("/checkCodeServlet")
 public class checkCodeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L; 
-       
+
     /**
      * @see HttpServlet#HttpServlet()
      */
