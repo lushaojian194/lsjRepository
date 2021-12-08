@@ -639,7 +639,7 @@ public class RoomController {
                     System.out.println("入住房的续住");
                     //续住后，修改入住天数和退房时间
                     roomService.checkInStayOver(map);
-                    //修改后再次取出来，在myRoom.jsp页面显示
+                    //修改后再次取出来，在myRoom.jsp页面显示 老看我干嘛
                     CheckIn checkIn2 = roomService.findCheckIn(hashMap);
                     //ajax回调
                     JSONObject json = new JSONObject();
