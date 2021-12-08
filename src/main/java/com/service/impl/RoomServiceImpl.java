@@ -14,7 +14,7 @@ import java.util.Map;
 public class RoomServiceImpl implements RoomService {
     @Autowired
     private RoomDao roomDao;
-    //查找全部推荐的房间
+    //查找全部推荐的房间 fejo
     @Override
     public List<Room> findRoom(Map<String,Object> startAndEndIndex) throws Exception {
         System.out.println("service方法");

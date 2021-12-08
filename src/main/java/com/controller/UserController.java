@@ -347,7 +347,7 @@ public class UserController {
             //通过邮件找回电话号码
             String phone = userService.findPhoneByEmail(email);
             String userName = null;
-            String password = null;
+            String password = null;  //fe
             //如果输入的email没有注册，则不进行查询密码和手机号
             if(phone!=null){
                 //利用手机号找回的用户名
