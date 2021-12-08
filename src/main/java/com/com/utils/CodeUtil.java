@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class CodeUtil {
-     private static int width = 90;// 定义图片的width
+     private static int width = 90;// 定义图片的width dfd
      private static int height = 20;// 定义图片的height
      private static int codeCount = 4;// 定义图片上显示验证码的个数
      private static int xx = 15;

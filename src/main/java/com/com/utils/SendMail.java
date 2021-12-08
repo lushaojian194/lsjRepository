@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.Properties;
 
 public class SendMail {
-	    // 发件人的邮箱账号如：xxx@163.com
+	    // 发件人的邮箱账号如：xxx@163.com efe
 		public static String sendEmailAccount = "18078326103@163.com";
 		// 发件人的邮箱的授权码(自己在邮箱服务器中开启并设置)
 		public static String sendEmailPassword = "OHYBXEQWYRCFXFPG";
